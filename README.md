@@ -1,5 +1,7 @@
 Work Time Automatic Control StopWatch
 ===========
+WARNING! System is in early development stage, not ready to use and code is not fully working, tested and commented yet.
+
 Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.
 Copyright (C) 2012  Tomayly Dmitry
 
