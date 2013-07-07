@@ -1,3 +1,5 @@
+Work Time Automatic Control StopWatch
+===========
 Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.
 Copyright (C) 2012  Tomayly Dmitry
 
