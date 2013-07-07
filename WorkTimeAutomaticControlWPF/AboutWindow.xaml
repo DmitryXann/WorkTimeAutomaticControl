@@ -1,0 +1,45 @@
+﻿<!--
+Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.
+Copyright (C) 2012  Tomayly Dmitry
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see http://www.gnu.org/licenses/.
+
+Google APIs Client Library for .NET license: http://www.apache.org/licenses/LICENSE-2.0 .
+-->
+	<Window x:Class="WorkTimeAutomaticControl.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="About Work Time Automatic Control" Height="368" Width="562" Icon="/WorkTimeAutomaticControl;component/logo.ico" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+    <Grid>
+		<Menu Height="23" HorizontalAlignment="Left" Background="Transparent" Margin="12,10,0,0" Name="MasinMenu" VerticalAlignment="Top" Width="672">
+			<MenuItem Header="About" Click="AboutMenuItem_Click" TabIndex="4" FontWeight="Bold">
+				<MenuItem.Effect>
+					<DropShadowEffect Color="White" BlurRadius="10" ShadowDepth="0" RenderingBias="Performance" ></DropShadowEffect>
+				</MenuItem.Effect>
+			</MenuItem>
+			<MenuItem Header="License" Click="LicenseMenuItem_Click" TabIndex="1" FontWeight="Bold">
+				<MenuItem.Effect>
+					<DropShadowEffect Color="White" BlurRadius="10" ShadowDepth="0" RenderingBias="Performance" ></DropShadowEffect>
+				</MenuItem.Effect>
+			</MenuItem>
+		</Menu>
+		<RichTextBox Height="173" Margin="10,39,10,0" Name="AboutRichTextBox" VerticalAlignment="Top" FontFamily="Courier New" AllowDrop="False" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" IsReadOnly="True" SelectionBrush="White" IsDocumentEnabled="True" Background="#64FFFFFF" TabIndex="0"></RichTextBox>
+		<Image Margin="12,218,10,41" Stretch="None" MouseLeftButtonUp="Image_MouseLeftButtonUp" StretchDirection="Both" Height="70" Source="/WorkTimeAutomaticControl;component/Resources/gplv3-127x51.png" />
+		<Button Content="Close" Margin="232,294,226,12" Background="Transparent" Click="CloseButton_Click" Height="23" TabIndex="3" FontWeight="Bold">
+			<Button.Effect>
+				<DropShadowEffect Color="White" BlurRadius="10" ShadowDepth="0" RenderingBias="Performance" ></DropShadowEffect>
+			</Button.Effect>
+		</Button>
+    </Grid>
+</Window>

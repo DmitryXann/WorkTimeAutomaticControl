@@ -1,0 +1,44 @@
+body
+{
+	margin: 0;
+	padding:0px;
+	width: 130px;
+	height: 75px;
+	font-family: Arial, Verdana, "SF Sans Serif";
+}
+
+#timer
+{
+	width:130px; 
+	position:relative; 
+	top:14px; 
+	text-align: center;
+	font-size: 30px;
+	color: #ffffff;
+	vertical-align:bottom;
+}
+
+#control
+{
+	width:130px; 
+	position:absolute; 
+	top:55px; 
+	text-align: center;
+}
+
+.fontlarge
+{
+	font-size: 34px;
+}
+
+.fontsmall
+{
+	font-size: 15px;
+}
+
+.fontcontrol
+{
+	font-size: 10px;
+	color: white;
+}
+	

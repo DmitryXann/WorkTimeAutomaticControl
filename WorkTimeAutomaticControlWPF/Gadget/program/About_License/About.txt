@@ -1,0 +1,24 @@
+Inspired by Jayden Howard`s StopWatch http://www.uniquewg.com/ .
+Part of JavaScript logic are taken from stopwatch: https://chrome.google.com/webstore/detail/mcljpmicehbpbaekngoncnhkacmkkkko .
+Part of design & icons are taken from RocketDock: http://rocketdock.com/addons/skins/downloads .
+Error icon are taken from Crystal Project Icons: http://www.softicons.com/free-icons/system-icons/crystal-project-icons-by-everaldo-coelho/apps-error-icon .
+Cool Aero Glass theme are taken from sample: http://blogs.msdn.com/b/adam_nathan/archive/2006/05/04/589686.aspx .
+Sounds are taken from original StarCraft http://eu.blizzard.com/en-gb/games/sc/index.html (Blizzard Entertainment (http://eu.blizzard.com), 1999).
+	
+Description:
+	Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.
+	If for some reason saving information fails, C# program automatically saves all information in local file.
+	When you start again C# program, it will automatically try to save local saves in the cloud, if saving was successful, program clears local file.
+	
+Default spreadsheets names:
+	WorkReport
+	WorkReportHistory
+		
+Local file structure:
+	<?xml version="1.0" encoding="utf-8"?>
+	<!--This is auto generated file, do not modify-->
+	<WorkTimeAutomaticControlCrashReport>
+		<WorkTime WorkTime="YYYY-MM-DDTHH:MM:SS">Work description</WorkTime>
+	</WorkTimeAutomaticControlCrashReport>
+	
+Copyright © Dmitry Tomayly 2012, E-Mail: mailrules@mail.ru

@@ -1,0 +1,61 @@
+﻿<!--
+Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.
+Copyright (C) 2012  Tomayly Dmitry
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see http://www.gnu.org/licenses/.
+
+Google APIs Client Library for .NET license: http://www.apache.org/licenses/LICENSE-2.0 .
+-->
+	<Window x:Class="WorkTimeAutomaticControl.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Work Time Automatic Control" Icon="/WorkTimeAutomaticControl;component/logo.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Closing="Window_Closing" Height="243" Width="510">
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="180*" />
+			<ColumnDefinition Width="Auto" />
+		</Grid.ColumnDefinitions>
+		<Menu Height="23" Margin="12,12,12,0" Background="Transparent" Name="MainMenu" VerticalAlignment="Top" IsTabStop="True" Grid.ColumnSpan="2">
+			<MenuItem Header="Settings" Name="SettingsMenuItem" IsChecked="False" Click="SettingsMenuItem_Click" TabIndex="2" FontWeight="Bold">
+				<MenuItem.Effect>
+					<DropShadowEffect Color="White" BlurRadius="10" ShadowDepth="0" RenderingBias="Performance" ></DropShadowEffect>
+				</MenuItem.Effect>
+			</MenuItem>
+			<MenuItem Header="About" Click="AboutMenuItem_Click" TabIndex="3" FontWeight="Bold">
+				<MenuItem.Effect>
+					<DropShadowEffect Color="White" BlurRadius="10" ShadowDepth="0" RenderingBias="Performance"></DropShadowEffect>
+				</MenuItem.Effect>
+			</MenuItem>
+		</Menu>
+		<TextBox Height="91" Margin="12,41,12,0" Name="WorkDescriptionTextBox" Background="#64FFFFFF" VerticalAlignment="Top" Text="Enter work description " KeyUp="WorkDescriptionTextBox_KeyUp" GotFocus="WorkDescriptionTextBox_GotFocus" Grid.ColumnSpan="2" TabIndex="0" IsTabStop="True" />
+		<Button Content="Report" Height="23" Margin="12,138,12,0" Background="Transparent" Name="ReportButton" VerticalAlignment="Top" Click="ReportButton_Click" Grid.ColumnSpan="2" TabIndex="1" FontWeight="Bold">
+			<Button.Effect>
+				<DropShadowEffect Color="White" BlurRadius="10" ShadowDepth="0" RenderingBias="Performance"></DropShadowEffect>
+			</Button.Effect>
+		</Button>
+		<StatusBar Margin="12,167,12,0" Background="Transparent" Name="WTACStatusBar" Height="33" VerticalAlignment="Top" Grid.ColumnSpan="2">
+			<Label Name="CurrentStatustoolStripStatusLabel" Visibility="Visible" FontWeight="Bold">
+				<Label.Effect>
+					<DropShadowEffect Color="White" BlurRadius="10" ShadowDepth="0" RenderingBias="Performance" ></DropShadowEffect>
+				</Label.Effect>
+			</Label>
+			<Label Name="SendingReportstoolStripStatusLabel" Visibility="Hidden" Content="Sending local saved work reports:" FontWeight="Bold">
+				<Label.Effect>
+					<DropShadowEffect Color="White" BlurRadius="10" ShadowDepth="0" RenderingBias="Performance" ></DropShadowEffect>
+				</Label.Effect>
+			</Label>
+			<ProgressBar Name="SavedWorkReportsSendingStatustoolStripProgressBar" Visibility="Hidden" HorizontalAlignment="Left"></ProgressBar>
+		</StatusBar>
+	</Grid>
+</Window>
