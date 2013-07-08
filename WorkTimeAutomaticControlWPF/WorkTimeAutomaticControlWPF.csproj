@@ -257,6 +257,7 @@ del /f /q $(ProjectDir)Gadget\program\*.exe.config
 del /f /q $(ProjectDir)Gadget\program\*.pdb
 del /f /q $(ProjectDir)Gadget\program\*.vshost.exe
 del /f /q $(ProjectDir)Gadget\program\*.vshost.exe.config
+del /f /q $(ProjectDir)Gadget\program\*.exe.manifest
 $(SolutionDir)WorkTimeAutomaticControlZipper\$(OutDir)WorkTimeAutomaticControlZipper.exe $(ProjectDir)Gadget\ WorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
