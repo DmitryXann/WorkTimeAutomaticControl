@@ -20,7 +20,7 @@ Google APIs Client Library for .NET license: http://www.apache.org/licenses/LICE
 	<Window x:Class="WorkTimeAutomaticControl.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Work Time Automatic Control Settings" Height="293" Width="402" Icon="/WorkTimeAutomaticControl;component/logo.ico" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        Title="Work Time Automatic Control Settings" Height="293" Width="402" Icon="/WorkTimeAutomaticControl;component/logo.ico" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" Loaded="Window_Loaded">
     <Grid>
 		<Label Content="Report Spreadsheet Name:" Height="28" Margin="12,12,0,0" VerticalAlignment="Top" Background="Transparent" FontWeight="Bold" HorizontalAlignment="Left" Width="170">
 			<Label.Effect>

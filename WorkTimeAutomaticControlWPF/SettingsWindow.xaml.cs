@@ -1,5 +1,5 @@
 ﻿//Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.
-//Copyright (C) 2012  Tomayly Dmitry
+//Copyright (C) 2013  Tomayly Dmitry
 //
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -56,9 +56,9 @@ namespace WorkTimeAutomaticControl
 		#region Buttons
 		private void SaseButton_Click(object sender, RoutedEventArgs e)
 		{
-			if (string.IsNullOrEmpty(LoginTextBox.Text)
-				|| string.IsNullOrEmpty(PasswordmaskedTextBox.Password)
-				|| string.IsNullOrEmpty(MultiplierTextBox.Text))
+			if (string.IsNullOrEmpty(LoginTextBox.Text) || 
+				string.IsNullOrEmpty(PasswordmaskedTextBox.Password) || 
+				string.IsNullOrEmpty(MultiplierTextBox.Text))
 			{
 				MessageBox.Show(@"All fields must be filled.", DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
@@ -96,51 +96,55 @@ namespace WorkTimeAutomaticControl
 			catch (CaptchaRequiredException captchaRequiredException)
 			{
 				_captchaRequiredException = captchaRequiredException;
-				var pictureResponse = WebRequest.Create(captchaRequiredException.Url).GetResponse();
 
-				if (pictureResponse == null)
+				try
+				{
+					var pictureResponse = WebRequest.Create(captchaRequiredException.Url).GetResponse();
+
+					var imageSource = new BitmapImage();
+					imageSource.BeginInit();
+					imageSource.StreamSource = pictureResponse.GetResponseStream();
+					imageSource.EndInit();
+
+					CaptchaImage.Source = imageSource;
+				}
+				catch (Exception)
 				{
 					CaptchaImage.Source = System.Windows.Interop.Imaging
-						.CreateBitmapSourceFromHBitmap(Properties.Resources.error.GetHbitmap(), IntPtr.Zero,
-						                               Int32Rect.Empty,
-						                               BitmapSizeOptions.FromEmptyOptions());
+					                            .CreateBitmapSourceFromHBitmap(Properties.Resources.error.GetHbitmap(), IntPtr.Zero,
+					                                                           Int32Rect.Empty,
+					                                                           BitmapSizeOptions.FromEmptyOptions());
 					MessageBox.Show("Google Account Captcha receive fail, enter this reCaptcha: \"GACRFETRC\".",
-						DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
+					                DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
 				}
-
-				var imageSource = new BitmapImage ();
-				imageSource.BeginInit();
-				imageSource.StreamSource = pictureResponse.GetResponseStream();
-				imageSource.EndInit();
-
-				CaptchaImage.Source = imageSource;
-				AutentificationFailReport();
-				MakeCaptchaFormTransformation(true);
-				CaptchaTextBox.Focus();
-				return;
+				finally
+				{
+					AutentificationFailReport();
+					MakeCaptchaFormTransformation(true);
+					CaptchaTextBox.Focus();
+				}
 			}
 			catch (Exception)
 			{
 				AutentificationFailReport();
 				MakeCaptchaFormTransformation();
 				LoginTextBox.Focus();
-				MessageBox.Show(@"Google Account login fail, enter correct login and password.", DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, 
-					MessageBoxButton.OK, MessageBoxImage.Error);
+
+				MessageBox.Show(@"Google Account login fail, enter correct login and password.", DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
+
 				return;
 			}
 
 			RegistryWork.SaveData(
-				new DataEntities.UserEntity(new DataEntities.UserPrivateData(Cryptography.GetCryptedMessage(LoginTextBox.Text),
-				                                                             Cryptography.GetCryptedMessage(PasswordmaskedTextBox.Password)),
-				                            new DataEntities.UserPrivateData(),
+				new DataEntities.UserEntity(new DataEntities.UserPrivateData(Cryptography.GetCryptedMessage(LoginTextBox.Text), Cryptography.GetCryptedMessage(PasswordmaskedTextBox.Password)),
 				                            multiplier,
 				                            workReportSpreadsheetName: string.IsNullOrEmpty(WorkReportSpreadsheetNameTextBox.Text)
-																		? DefaultConst.DEFAULT_WORK_REPORT_SPREADHEET_NAME
-				                                                       	: WorkReportSpreadsheetNameTextBox.Text,
+					                                                       ? DefaultConst.DEFAULT_WORK_REPORT_SPREADHEET_NAME
+					                                                       : WorkReportSpreadsheetNameTextBox.Text,
 				                            workReportHistorySpreadsheetName:
-				                            	string.IsNullOrEmpty(HistorySpreadsheetNameTextBox.Text)
-													? DefaultConst.DEFAULT_WORK_REPORT_HISTORY_SPREADHEET_NAME
-				                            		: HistorySpreadsheetNameTextBox.Text), false);
+					                            string.IsNullOrEmpty(HistorySpreadsheetNameTextBox.Text)
+						                            ? DefaultConst.DEFAULT_WORK_REPORT_HISTORY_SPREADHEET_NAME
+						                            : HistorySpreadsheetNameTextBox.Text));
 			Close();
 		}
 
@@ -156,6 +160,7 @@ namespace WorkTimeAutomaticControl
 			Height = useCaptcha
 			         	? DEFAULT_WINDOWS_HEIGTH_WITH_CAPTCHA
 			         	: DEFAULT_WINDOWS_HEIGTH_WITHOUT_CAPTCHA;
+
 			var visibility = useCaptcha ? Visibility.Visible : Visibility.Collapsed;
 
 			CaptchaTextBox.Visibility = visibility;
@@ -164,6 +169,7 @@ namespace WorkTimeAutomaticControl
 			CaptchaToolStripStatusLabel.Visibility = visibility;
 			CaptchaImage.Visibility = visibility;
 			CaptchaTextBox.TabIndex = useCaptcha ? 5 : 15;
+
 			_captchaRequire = useCaptcha;
 		}
 
@@ -183,7 +189,7 @@ namespace WorkTimeAutomaticControl
 
 		private void TryToActivateOkMessage()
 		{
-			var currentStatus = (!_googleLoginTextBoxValid || !_googlePasswordTextBboxValid || !_multiplierTextBoxValid || !(_captchaRequire ? _captchaTextBoxValid : true));
+			var currentStatus = (!_googleLoginTextBoxValid || !_googlePasswordTextBboxValid || !_multiplierTextBoxValid || !(!_captchaRequire || _captchaTextBoxValid));
 
 			var visibility = currentStatus ? Visibility.Visible : Visibility.Collapsed;
 			AsterisktoolStripStatusLabel.Visibility = visibility;
@@ -328,12 +334,24 @@ namespace WorkTimeAutomaticControl
 		{
 			GlassHelper.ExtendGlassFrame(this, new Thickness(-1));
 
-			WorkReportSpreadsheetNameTextBox.Text = string.IsNullOrEmpty(_userInfo.WorkReportSpreadsheetName) ? DefaultConst.DEFAULT_WORK_REPORT_SPREADHEET_NAME : _userInfo.WorkReportSpreadsheetName;
-			HistorySpreadsheetNameTextBox.Text = string.IsNullOrEmpty(_userInfo.WorkReportHistorySpreadsheetName) ? DefaultConst.DEFAULT_WORK_REPORT_HISTORY_SPREADHEET_NAME : _userInfo.WorkReportHistorySpreadsheetName;
+			WorkReportSpreadsheetNameTextBox.Text = string.IsNullOrEmpty(_userInfo.WorkReportSpreadsheetName)
+				                                        ? DefaultConst.DEFAULT_WORK_REPORT_SPREADHEET_NAME
+				                                        : _userInfo.WorkReportSpreadsheetName;
+
+			HistorySpreadsheetNameTextBox.Text = string.IsNullOrEmpty(_userInfo.WorkReportHistorySpreadsheetName)
+				                                     ? DefaultConst.DEFAULT_WORK_REPORT_HISTORY_SPREADHEET_NAME
+				                                     : _userInfo.WorkReportHistorySpreadsheetName;
+
 			LoginTextBox.Text = _userInfo.CloudDBUserData.Login;
 			PasswordmaskedTextBox.Password = _userInfo.CloudDBUserData.Password;
 			MultiplierTextBox.Text = _userInfo.Multiplayer.ToString();
 		}
 		#endregion
+
+		public void ShowDialog(Window parent)
+		{
+			Owner = parent;
+			ShowDialog();
+		}
 	}
 }

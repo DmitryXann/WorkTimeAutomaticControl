@@ -1,5 +1,5 @@
 ﻿//Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.
-//Copyright (C) 2012  Tomayly Dmitry
+//Copyright (C) 2013  Tomayly Dmitry
 //
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -23,7 +23,10 @@ using System.Windows.Media;
 
 namespace WorkTimeAutomaticControl
 {
-	public class GlassHelper
+	/// <summary>
+	/// Extends aero effect on whole application window
+	/// </summary>
+	internal class GlassHelper
 	{
 		[DllImport("dwmapi.dll", PreserveSig = false)]
 		static extern void DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS margins);
@@ -31,8 +34,13 @@ namespace WorkTimeAutomaticControl
 		[DllImport("dwmapi.dll", PreserveSig = false)]
 		static extern bool DwmIsCompositionEnabled();
 
-		struct MARGINS
+		internal struct MARGINS
 		{
+			public int Left;
+			public int Right;
+			public int Top;
+			public int Bottom;
+
 			public MARGINS(Thickness t)
 			{
 				Left = (int)t.Left;
@@ -40,13 +48,14 @@ namespace WorkTimeAutomaticControl
 				Top = (int)t.Top;
 				Bottom = (int)t.Bottom;
 			}
-			public int Left;
-			public int Right;
-			public int Top;
-			public int Bottom;
 		}
 
-		public static bool ExtendGlassFrame(Window window, Thickness margin)
+		/// <summary>
+		/// Extends aero effect on whole application window if it is possible
+		/// </summary>
+		/// <returns>true - if operation succeeded, false - oterwise</returns>
+		/// <exception cref="InvalidOperationException"></exception>
+		internal static bool ExtendGlassFrame(Window window, Thickness margin)
 		{
 			if ((Environment.OSVersion.Version.Major < 6) || !DwmIsCompositionEnabled())
 				return false;
@@ -65,6 +74,7 @@ namespace WorkTimeAutomaticControl
 
 			var margins = new MARGINS(margin);
 			DwmExtendFrameIntoClientArea(hwnd, ref margins);
+
 			return true;
 		}
 	}

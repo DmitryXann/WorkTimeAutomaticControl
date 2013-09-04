@@ -1,5 +1,5 @@
 ﻿//Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.
-//Copyright (C) 2012  Tomayly Dmitry
+//Copyright (C) 2013  Tomayly Dmitry
 //
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -19,22 +19,27 @@ using System;
 
 namespace WorkTimeAutomaticControl
 {
+	/// <summary>
+	/// Represents all data storing entities
+	/// </summary>
 	public static class DataEntities
 	{
+		/// <summary>
+		/// Represents single data entity
+		/// </summary>
 		public struct UserEntity
 		{
 			internal UserPrivateData CloudDBUserData;
-			internal UserPrivateData BugTrackUserData;
+
 			internal int Multiplayer;
 			internal string WorkReportSpreadsheetName;
 			internal string WorkReportHistorySpreadsheetName;
 			internal bool Crash;
 
-			internal UserEntity(UserPrivateData cloudDBUserData, UserPrivateData bugTrackUserData, int multiplayer, bool crash = false
-				, string workReportSpreadsheetName = "WorkReport", string workReportHistorySpreadsheetName = "WorkReportHistory")
+			internal UserEntity(UserPrivateData cloudDBUserData, int multiplayer, bool crash = false, 
+				string workReportSpreadsheetName = "WorkReport", string workReportHistorySpreadsheetName = "WorkReportHistory")
 			{
 				CloudDBUserData = cloudDBUserData;
-				BugTrackUserData = bugTrackUserData;
 
 				Multiplayer = multiplayer;
 
@@ -45,6 +50,9 @@ namespace WorkTimeAutomaticControl
 			}
 		}
 
+		/// <summary>
+		/// Stores login password pair
+		/// </summary>
 		internal struct UserPrivateData
 		{
 			internal string Login;
@@ -57,6 +65,9 @@ namespace WorkTimeAutomaticControl
 			}
 		}
 
+		/// <summary>
+		/// Stores single work report
+		/// </summary>
 		public struct WorkEntity
 		{
 			internal DateTime WorkTime;

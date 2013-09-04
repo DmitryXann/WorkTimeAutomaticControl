@@ -44,8 +44,8 @@ Google APIs Client Library for .NET license: http://www.apache.org/licenses/LICE
 				<DropShadowEffect Color="White" BlurRadius="10" ShadowDepth="0" RenderingBias="Performance"></DropShadowEffect>
 			</Button.Effect>
 		</Button>
-		<StatusBar Margin="12,0,12,12" Background="Transparent" Name="WTACStatusBar" Height="33" VerticalAlignment="Bottom">
-			<Label Name="CurrentStatustoolStripStatusLabel" Visibility="Visible" FontWeight="Bold" Height="23" Width="468">
+		<StatusBar Margin="10,0,14,14" Background="Transparent" Name="WTACStatusBar" Height="33" VerticalAlignment="Bottom">
+			<Label Name="CurrentStatustoolStripStatusLabel" Visibility="Visible" FontWeight="Bold">
 				<Label.Effect>
 					<DropShadowEffect Color="White" BlurRadius="10" ShadowDepth="0" RenderingBias="Performance" ></DropShadowEffect>
 				</Label.Effect>

@@ -1,5 +1,5 @@
 ﻿//Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.
-//Copyright (C) 2012  Tomayly Dmitry
+//Copyright (C) 2013  Tomayly Dmitry
 //
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -17,6 +17,9 @@
 //Google APIs Client Library for .NET license: http://www.apache.org/licenses/LICENSE-2.0 .
 namespace WorkTimeAutomaticControl
 {
+	/// <summary>
+	/// Stores application const, that shared between some classes
+	/// </summary>
 	internal static class DefaultConst
 	{
 		internal const string DEFAULT_WORK_REPORT_SPREADHEET_NAME = "WorkReport";

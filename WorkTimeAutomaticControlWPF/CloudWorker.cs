@@ -1,5 +1,5 @@
 ﻿//Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.
-//Copyright (C) 2012  Tomayly Dmitry
+//Copyright (C) 2013  Tomayly Dmitry
 //
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -19,11 +19,17 @@ using System;
 using System.Linq;
 using Google.GData.Client;
 using Google.GData.Spreadsheets;
+using WorkTimeAutomaticControl.Exceptions;
 
 namespace WorkTimeAutomaticControl
 {
+	/// <summary>
+	/// Handle google spreadsheet creation and data storing
+	/// </summary>
 	internal sealed class CloudWorker
 	{
+		private const string APPLICATION_NAME = "WorkTimeAutomaticControl";
+
 		private static Google.GData.Documents.DocumentsService _documentService;
 
 		private readonly SpreadsheetsService _spreadsheetService;
@@ -32,38 +38,25 @@ namespace WorkTimeAutomaticControl
 		private readonly string _workReportPreviousMonthSpreadsheetName;
 
 
+		/// <summary>
+		/// Cloud worker initialization
+		/// </summary>
+		/// <exception cref="ArgumentException">Multiplier cant be empty or null.</exception>
 		internal CloudWorker(DataEntities.UserPrivateData userInfo, string multiplier, string workReportSpreadsheetName = DefaultConst.DEFAULT_WORK_REPORT_SPREADHEET_NAME, 
 			string workReportHistorySpreadsheetName = DefaultConst.DEFAULT_WORK_REPORT_HISTORY_SPREADHEET_NAME)
 		{
-			try
-			{
-				_documentService = new Google.GData.Documents.DocumentsService("WorkTimeAutomaticControl");
-				_documentService.setUserCredentials(userInfo.Login, userInfo.Password);
+			//throw new CloudWorkerException("olol");
 
-				_documentService.QueryClientLoginToken();
+			_documentService = new Google.GData.Documents.DocumentsService(APPLICATION_NAME);
+			_documentService.setUserCredentials(userInfo.Login, userInfo.Password);
 
-				_spreadsheetService = new SpreadsheetsService("WorkTimeAutomaticControl");
-				_spreadsheetService.setUserCredentials(userInfo.Login, userInfo.Password);
-			}
-			catch (CaptchaRequiredException)
-			{
-				throw;
-			}
-			catch (InvalidCredentialsException)
-			{
-				throw;
-			}
-			catch (AuthenticationException)
-			{
-				throw;
-			}
-			catch (Exception)
-			{
-				throw;
-			}
+			_documentService.QueryClientLoginToken();
+
+			_spreadsheetService = new SpreadsheetsService(APPLICATION_NAME);
+			_spreadsheetService.setUserCredentials(userInfo.Login, userInfo.Password);
 
 			if (string.IsNullOrEmpty(multiplier))
-				throw new ArgumentException(string.Format("Multiplier cant be empty or null."));
+				throw new ArgumentException("Multiplier cant be empty or null.");
 
 			_workReportSpreadsheetName = string.IsNullOrEmpty(workReportSpreadsheetName)
 											? DefaultConst.DEFAULT_WORK_REPORT_SPREADHEET_NAME
@@ -75,6 +68,10 @@ namespace WorkTimeAutomaticControl
 			_multiplier = multiplier;
 		}
 
+		/// <summary>
+		/// Sends work info to google docs
+		/// </summary>
+		/// <exception cref="CloudWorkerException"></exception>
 		internal void SendWorkUpdate(DataEntities.WorkEntity workInfo)
 		{
 			var spreadsheetURI = NewSpreadsheet(_workReportSpreadsheetName);
@@ -91,7 +88,7 @@ namespace WorkTimeAutomaticControl
 					var previousMonthSpreadsheetURI = NewSpreadsheet(_workReportPreviousMonthSpreadsheetName);
 					var previousMonthEntityCount = _spreadsheetService.Query(new CellQuery(previousMonthSpreadsheetURI)).Entries.Count;
 					var previousMonthEntity = (uint)((previousMonthEntityCount / 4) + 2);
-					
+
 					var row = 4;
 					while (row < entityCount)
 					{
@@ -110,16 +107,21 @@ namespace WorkTimeAutomaticControl
 			}
 			else
 				if (entityCount != 4)
-					throw new Exception(string.Format("Incorrect spreadsheet structure."));
-		
+					throw new CloudWorkerException("Incorrect spreadsheet structure.");
+
 			EditCell(spreadsheetURI, workInfo.WorkTime.ToString("d"), numbeerOfRow, 1, ref entityCount);
 			EditCell(spreadsheetURI, string.IsNullOrEmpty(workInfo.Project)
-				? "Enter addition project info" 
+				? "Enter addition project info"
 				: workInfo.Project, numbeerOfRow, 2, ref entityCount);
 			EditCell(spreadsheetURI, workInfo.WorkDescription, numbeerOfRow, 3, ref entityCount);
 			EditCell(spreadsheetURI, workInfo.WorkTime.ToString("HH:mm"), numbeerOfRow, 4, ref entityCount);
 		}
 
+		/// <summary>
+		/// Creates new spreadsheet with needed name
+		/// </summary>
+		/// <param name="documentName">spreadsheet name</param>
+		/// <returns>spreadsheet URI</returns>
 		private string NewSpreadsheet(string documentName)
 		{
 			var newSpreadsheet = _documentService.Query(new Google.GData.Documents.DocumentsListQuery())
@@ -157,9 +159,12 @@ namespace WorkTimeAutomaticControl
 			return spreadsheetURI;
 		}
 
+		/// <summary>
+		/// Edit single cell
+		/// </summary>
 		private void EditCell(string spreadsheetURI, string inputValue, uint row, uint column, ref int entityCount, bool deleteItem = false)
 		{
-			do
+			do //Extra logic to ensure, that cell is created, because sometimes it need to be done several times
 				do
 					_spreadsheetService.Insert(new Uri(spreadsheetURI), new CellEntry
 					                                                    	{
@@ -179,64 +184,47 @@ namespace WorkTimeAutomaticControl
 				entityCount++;
 		}
 
-
+		/// <summary>
+		/// Checks user data connecting to google
+		/// </summary>
+		/// <returns>true - if all ok, false - otherwise</returns>
+		/// <exception cref="CaptchaRequiredException"></exception>
+		/// <exception cref="InvalidCredentialsException"></exception>
 		internal static bool CheckUserData(DataEntities.UserPrivateData userInfo)
 		{
-			try
-			{
-				_documentService = new Google.GData.Documents.DocumentsService("WorkTimeAutomaticControl");
-				_documentService.setUserCredentials(userInfo.Login, userInfo.Password);
-				_documentService.QueryClientLoginToken();
-				return true;
-			}
-			catch (CaptchaRequiredException)
-			{
-				throw;
-			}
-			catch (InvalidCredentialsException)
-			{
-				throw;
-			}
-			catch (AuthenticationException)
-			{
-				throw;
-			}
-			catch (Exception)
-			{
-				throw;
-			}
+			_documentService = new Google.GData.Documents.DocumentsService(APPLICATION_NAME);
+			_documentService.setUserCredentials(userInfo.Login, userInfo.Password);
+			_documentService.QueryClientLoginToken();
+
+			return true;
 		}
 
+		/// <summary>
+		/// Process captcha
+		/// </summary>
+		/// <returns>true - if all ok, false - otherwise</returns>
+		/// <exception cref="CaptchaRequiredException"></exception>
+		/// <exception cref="InvalidCredentialsException"></exception>
 		internal static bool HandleCaptcha(CaptchaRequiredException captchaRequiredException, DataEntities.UserPrivateData userInfo, string captchaAnswer)
 		{
 			if (_documentService == null)
 				throw new ArgumentNullException(
-					string.Format("Google document service == null, that's means, that you try to use this method before using internal static bool CheckUserData(DataEntities.UserPrivateData userInfo). \nFirst use internal static bool CheckUserData(DataEntities.UserPrivateData userInfo) and, if CaptchaRequiredException was thrown, use this(internal static bool HandleCaptcha(CaptchaRequiredException captchaRequiredException, DataEntities.UserPrivateData userInfo, string captchaAnswer)) method."));
-			try
-			{
-				_documentService.setUserCredentials(userInfo.Login, userInfo.Password);
-				var requestFactory = (GDataGAuthRequestFactory)_documentService.RequestFactory;
-				requestFactory.CaptchaAnswer = captchaAnswer;
-				requestFactory.CaptchaToken = captchaRequiredException.Token;
-				_documentService.QueryClientLoginToken();
-				return true;
-			}
-			catch (CaptchaRequiredException)
-			{
-				throw;
-			}
-			catch (InvalidCredentialsException)
-			{
-				throw;
-			}
-			catch (AuthenticationException)
-			{
-				throw;
-			}
-			catch (Exception)
-			{
-				throw;
-			}
+					string.Format(@"Google document service == null, that's means, that you try to use this method before using 
+internal static bool CheckUserData(DataEntities.UserPrivateData userInfo).
+First use internal static bool CheckUserData(DataEntities.UserPrivateData userInfo) and, 
+if CaptchaRequiredException was thrown, use 
+this(internal static bool HandleCaptcha(CaptchaRequiredException captchaRequiredException, DataEntities.UserPrivateData userInfo, string captchaAnswer)) method."));
+
+			_documentService.setUserCredentials(userInfo.Login, userInfo.Password);
+
+			var requestFactory = (GDataGAuthRequestFactory)_documentService.RequestFactory;
+
+			requestFactory.CaptchaAnswer = captchaAnswer;
+			requestFactory.CaptchaToken = captchaRequiredException.Token;
+
+			_documentService.QueryClientLoginToken();
+
+			return true;
 		}
 	}
 }

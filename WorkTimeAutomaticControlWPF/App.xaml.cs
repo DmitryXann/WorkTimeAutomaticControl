@@ -1,5 +1,5 @@
 ﻿//Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.
-//Copyright (C) 2012  Tomayly Dmitry
+//Copyright (C) 2013  Tomayly Dmitry
 //
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -33,6 +33,10 @@ namespace WorkTimeAutomaticControl
 			Shutdown();
 		}
 
+		/// <summary>
+		/// Process input args
+		/// </summary>
+		/// <param name="args"></param>
 		protected void ProcessSturtUp(string[] args)
 		{
 			if (args.Length == 0)
@@ -48,10 +52,8 @@ namespace WorkTimeAutomaticControl
 				return;
 			}
 
-			new MainWindow(
-				new DataEntities.WorkEntity(new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day,
-				                                         dateTime.Hour, dateTime.Minute, dateTime.Second)))
-				.ShowDialog();
+			new MainWindow(new DataEntities.WorkEntity(new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day,
+				                                         dateTime.Hour, dateTime.Minute, dateTime.Second))).ShowDialog();
 		}
 	}
 }

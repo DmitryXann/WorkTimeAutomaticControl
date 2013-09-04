@@ -21,4 +21,4 @@ Local file structure:
 		<WorkTime WorkTime="YYYY-MM-DDTHH:MM:SS">Work description</WorkTime>
 	</WorkTimeAutomaticControlCrashReport>
 	
-Copyright © Dmitry Tomayly 2012, E-Mail: mailrules@mail.ru
+Copyright © Dmitry Tomayly 2013, E-Mail: mailrules@mail.ru

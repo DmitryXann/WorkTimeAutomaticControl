@@ -1,5 +1,5 @@
 ﻿//Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.
-//Copyright (C) 2012  Tomayly Dmitry
+//Copyright (C) 2013  Tomayly Dmitry
 //
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -58,6 +58,11 @@ namespace WorkTimeAutomaticControl
 		#endregion
 
 		#region Methods
+
+		/// <summary>
+		/// Appends needed text to text box
+		/// </summary>
+		/// <param name="showAbout"></param>
 		private void AppendTextToAboutTextBox(bool showAbout)
 		{
 			AboutRichTextBox.Document.Blocks.Clear();
@@ -71,9 +76,15 @@ namespace WorkTimeAutomaticControl
 		#region FormEvents
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			GlassHelper.ExtendGlassFrame(this, new Thickness(-1));
+			GlassHelper.ExtendGlassFrame(this, new Thickness(-1)); // extend aero effect if possible
 			AppendTextToAboutTextBox(true);
 		}
 		#endregion
+
+		public void ShowDialog(Window parent)
+		{
+			Owner = parent;
+			ShowDialog();
+		}
 	}
 }
