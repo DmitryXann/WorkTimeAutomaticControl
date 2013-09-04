@@ -255,10 +255,10 @@ del /f /q $(ProjectDir)Gadget\program\*.vshost.exe
 del /f /q $(ProjectDir)Gadget\program\*.vshost.exe.config
 del /f /q $(ProjectDir)Gadget\program\*.exe.manifest
 $(SolutionDir)WorkTimeAutomaticControlZipper\$(OutDir)WorkTimeAutomaticControlZipper.exe $(ProjectDir)Gadget\ WorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget
-if not exist $(SolutionDir)WorkTimeAutomaticControl (md $(SolutionDir)WorkTimeAutomaticControl)
-if not exist $(SolutionDir)WorkTimeAutomaticControl\$(ConfigurationName) (md $(SolutionDir)WorkTimeAutomaticControl\$(ConfigurationName))
-if exist $(SolutionDir)WorkTimeAutomaticControl\$(ConfigurationName)\WorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget (del /f /q $(SolutionDir)WorkTimeAutomaticControl\$(ConfigurationName)\*.gadget)
-copy $(ProjectDir)GadgetWorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget $(SolutionDir)WorkTimeAutomaticControl\$(ConfigurationName)\WorkTimeAutomaticControlStopWatch.gadget</PostBuildEvent>
+if not exist $(SolutionDir)GadgetBuilds (md $(SolutionDir)GadgetBuilds)
+if not exist $(SolutionDir)GadgetBuilds\$(ConfigurationName) (md $(SolutionDir)GadgetBuilds\$(ConfigurationName))
+if exist $(SolutionDir)GadgetBuilds\$(ConfigurationName)\WorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget (del /f /q $(SolutionDir)GadgetBuilds\$(ConfigurationName)\*.gadget)
+copy $(ProjectDir)GadgetWorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget $(SolutionDir)GadgetBuilds\$(ConfigurationName)\WorkTimeAutomaticControlStopWatch.gadget</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
