@@ -12,7 +12,7 @@
     <copyright>© Dmitry Tomayly</copyright>
     <description>
 		Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.
-		Version info: 8(Gadjet version).110(C# program version).0(beta release)
+		Version info: 8(Gadjet version).120(C# program version).0(beta release)
 	</description>
     <hosts>
         <host name="sidebar">
