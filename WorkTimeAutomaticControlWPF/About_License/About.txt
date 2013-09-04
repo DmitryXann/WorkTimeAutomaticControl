@@ -1,4 +1,4 @@
-Inspired by Jayden Howard`s StopWatch http://www.uniquewg.com/ .
+Inspired by Jayden Howard`s StopWatch.
 Part of JavaScript logic are taken from stopwatch: https://chrome.google.com/webstore/detail/mcljpmicehbpbaekngoncnhkacmkkkko .
 Part of design & icons are taken from RocketDock: http://rocketdock.com/addons/skins/downloads .
 Error icon are taken from Crystal Project Icons: http://www.softicons.com/free-icons/system-icons/crystal-project-icons-by-everaldo-coelho/apps-error-icon .
