@@ -1,9 +1,8 @@
 Work Time Automatic Control StopWatch
 ===========
-WARNING! System is in early development stage, not ready to use and code is not fully working, tested and commented yet.
 
 Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.
-Copyright (C) 2012  Tomayly Dmitry
+Copyright (C) 2013 Tomayly Dmitry
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
