@@ -258,7 +258,7 @@ $(SolutionDir)WorkTimeAutomaticControlZipper\$(OutDir)WorkTimeAutomaticControlZi
 if not exist $(SolutionDir)WorkTimeAutomaticControl (md $(SolutionDir)WorkTimeAutomaticControl)
 if not exist $(SolutionDir)WorkTimeAutomaticControl\$(ConfigurationName) (md $(SolutionDir)WorkTimeAutomaticControl\$(ConfigurationName))
 if exist $(SolutionDir)WorkTimeAutomaticControl\$(ConfigurationName)\WorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget (del /f /q $(SolutionDir)WorkTimeAutomaticControl\$(ConfigurationName)\*.gadget)
-copy $(ProjectDir)GadgetWorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget $(SolutionDir)WorkTimeAutomaticControl\$(ConfigurationName)\WorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget</PostBuildEvent>
+copy $(ProjectDir)GadgetWorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget $(SolutionDir)WorkTimeAutomaticControl\$(ConfigurationName)\WorkTimeAutomaticControlStopWatch.gadget</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
