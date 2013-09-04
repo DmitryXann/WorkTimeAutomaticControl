@@ -96,18 +96,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>GoogleDocsAPI\Google.GData.Spreadsheets.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.0.5.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>GoogleDocsAPI\Newtonsoft.Json.DLL</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -124,6 +117,9 @@
     <Compile Include="Cryptography.cs" />
     <Compile Include="DataEntities.cs" />
     <Compile Include="DefaultConst.cs" />
+    <Compile Include="Exceptions\CloudWorkerException.cs" />
+    <Compile Include="Exceptions\CrashHandlerException.cs" />
+    <Compile Include="Exceptions\RegystryWorkException.cs" />
     <Compile Include="GlassHelper.cs" />
     <Compile Include="RegistryWork.cs" />
     <Compile Include="Settings.cs" />
