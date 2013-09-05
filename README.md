@@ -18,3 +18,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see http://www.gnu.org/licenses/.
 
 Google APIs Client Library for .NET license: http://www.apache.org/licenses/LICENSE-2.0 .
+___________
+
+Projects folders:
+===========
+
+GadgetBuilds - debug and release gadget versions
+
+WorkTimeAutomaticControlWPF - application src
+
+WorkTimeAutomaticControlZipper - gadget zipper, used for automatically(after success build) create new gadget build
