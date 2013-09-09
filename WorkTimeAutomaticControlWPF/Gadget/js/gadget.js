@@ -4,6 +4,7 @@
 	var default_save_mins_time_out = 1;
 	var default_rest_mins_period_breack = 30;
 	var default_rest_mins = 5;
+	var default_min_cloud_save_time = 1;
 	//===========================vars========================
 	var g_date;
 	
@@ -175,7 +176,7 @@
 			
 			save_current_time_to_registry(0);
 
-			if((((h * 60) + m) >= 15))
+			if((((h * 60) + m) >= default_min_cloud_save_time))
 			{
 				shell.Exec(System.Gadget.path + "\\program\\WorkTimeAutomaticControl.exe " + h + ":" + m);
 			}
