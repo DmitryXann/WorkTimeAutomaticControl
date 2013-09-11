@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.ComponentModel;
@@ -30,18 +31,10 @@ namespace WorkTimeAutomaticControl
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		public MainWindow(DataEntities.WorkEntity workInfo)
-		{
-			_workInfo = workInfo;
-			InitializeComponent();
-
-			_sendLocalSavedWorkReportsbackgroundWorker = new BackgroundWorker {WorkerReportsProgress = true};
-			_sendLocalSavedWorkReportsbackgroundWorker.ProgressChanged += SendLocalSavedWorkReportsbackgroundWorker_ProgressChanged;
-			_sendLocalSavedWorkReportsbackgroundWorker.DoWork += SendLocalSavedWorkReportsbackgroundWorker_DoWork;
-			_sendLocalSavedWorkReportsbackgroundWorker.RunWorkerCompleted += SendLocalSavedWorkReportsbackgroundWorker_RunWorkerCompleted;
-		}
-
 		private const string WORK_DESCRIPTION_WHEN_FORM_CLOSING_MISSING = @"User forgot to enter work description";
+		private const sbyte MAX_ON_STURT_UP_SETTINGS_FORMS_SHOWS		= 1;
+
+		private sbyte _currentlyOnSturtUpSettingsFormsShown;
 
 		private DataEntities.UserEntity _userInfo;
 		private DataEntities.WorkEntity _workInfo;
@@ -54,6 +47,18 @@ namespace WorkTimeAutomaticControl
 		private IEnumerable<DataEntities.WorkEntity> _crashReports;
 		private readonly BackgroundWorker _sendLocalSavedWorkReportsbackgroundWorker;
 
+		public MainWindow(DataEntities.WorkEntity workInfo)
+		{
+			Thread.CurrentThread.TrySetApartmentState(ApartmentState.STA);
+			_workInfo = workInfo;
+			InitializeComponent();
+
+			_sendLocalSavedWorkReportsbackgroundWorker = new BackgroundWorker {WorkerReportsProgress = true};
+			_sendLocalSavedWorkReportsbackgroundWorker.ProgressChanged += SendLocalSavedWorkReportsbackgroundWorker_ProgressChanged;
+			_sendLocalSavedWorkReportsbackgroundWorker.DoWork += SendLocalSavedWorkReportsbackgroundWorker_DoWork;
+			_sendLocalSavedWorkReportsbackgroundWorker.RunWorkerCompleted += SendLocalSavedWorkReportsbackgroundWorker_RunWorkerCompleted;
+		}
+		
 		#region Methods
 
 		/// <summary>
@@ -72,7 +77,7 @@ namespace WorkTimeAutomaticControl
 			}
 			catch (CaptchaRequiredException captchaRequiredException) //try to enter correct data, exception stop thows after several false attempts
 			{
-				MessageBox.Show("Cloud access require captcha, re-enter needed data and enter captcha.", 
+				MessageBox.Show(this, "Cloud access require captcha, re-enter needed data and enter captcha.", 
 								DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
 
 				ActivateSettiingsForm(captchaRequiredException);
@@ -82,7 +87,7 @@ namespace WorkTimeAutomaticControl
 			}
 			catch (InvalidCredentialsException) //Invalid user data, exception stop thows after several false attempts
 			{
-				MessageBox.Show("Cloud access failed, login or password incorrect, re-enter correct login and password and try again.", 
+				MessageBox.Show(this, "Cloud access failed, login or password incorrect, re-enter correct login and password and try again.", 
 								DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
 
 				ActivateSettiingsForm();
@@ -93,7 +98,7 @@ namespace WorkTimeAutomaticControl
 			catch (Exception exception)
 			{
 				if (throwCloudException)
-					MessageBox.Show(string.Format("Cloud access failed with exception: \n{0}.\nAll your data saved locally and will be saved in the cloud when cloud will be available.", exception.Message), 
+					MessageBox.Show(this, string.Format("Cloud access failed with exception: \n{0}.\nAll your data saved locally and will be saved in the cloud when cloud will be available.", exception.Message), 
 									DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
 				UpdateCrashReportRegistryEntry(true);
 
@@ -103,7 +108,7 @@ namespace WorkTimeAutomaticControl
 				}
 				catch (Exception crashReportException)
 				{
-					if (MessageBox.Show(string.Format("Save crash report information to file failed with exception: {0}, delete corrupted file?", crashReportException.Message),
+					if (MessageBox.Show(this, string.Format("Save crash report information to file failed with exception: {0}, delete corrupted file?", crashReportException.Message),
 										DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
 					{
 						try
@@ -114,17 +119,17 @@ namespace WorkTimeAutomaticControl
 						}
 						catch (Exception)
 						{
-							MessageBox.Show(string.Format("Deleting crash report information file failed with exception: {0}, try again later.", crashReportException.Message), 
+							MessageBox.Show(this, string.Format("Deleting crash report information file failed with exception: {0}, try again later.", crashReportException.Message), 
 											DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
 						}
 					}
 					else
 					{
-						MessageBox.Show(@"Corrupted crash report file will open in text editor automatically.", DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Warning);
+						MessageBox.Show(this, "Corrupted crash report file will open in text editor automatically.", DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Warning);
 
 						CrashHandler.OpenCrashReportFileInDefaultTextEditor();
 
-						MessageBox.Show(@"Press ""YES"" when you finishing corrupted file editing.
+						MessageBox.Show(this, @"Press ""YES"" when you finishing corrupted file editing.
 Default file structure:
 <?xml version=""1.0"" encoding=""utf-8""?>
 <!--This is auto generated file, do not modify-->
@@ -139,7 +144,7 @@ Default file structure:
 						}
 						catch (Exception secondCrashReportException)
 						{
-							if (MessageBox.Show(string.Format(@"Save crash report information file failed with exception: {0}, delete corrupted file?", secondCrashReportException.Message),
+							if (MessageBox.Show(this, string.Format(@"Save crash report information file failed with exception: {0}, delete corrupted file?", secondCrashReportException.Message),
 												DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
 							{
 								try
@@ -149,7 +154,7 @@ Default file structure:
 								}
 								catch (Exception)
 								{
-									MessageBox.Show(string.Format("Deleting crash report information file failed with exception: {0}, try again later.",
+									MessageBox.Show(this, string.Format("Deleting crash report information file failed with exception: {0}, try again later.",
 														crashReportException.Message), DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
 								}
 							}
@@ -157,7 +162,7 @@ Default file structure:
 							{
 								try
 								{
-									MessageBox.Show(@"Corrupted crash report file will be moved on your desktop",
+									MessageBox.Show(this, @"Corrupted crash report file will be moved on your desktop",
 										            DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Warning);
 
 									CrashHandler.MoveCrashedReportToDescktop();
@@ -166,7 +171,7 @@ Default file structure:
 								}
 								catch (Exception)
 								{
-									MessageBox.Show(string.Format("Moving crash report information failed with exception: {0}, try again later.",
+									MessageBox.Show(this, string.Format("Moving crash report information failed with exception: {0}, try again later.",
 										            crashReportException.Message), DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
 								}
 							}
@@ -190,7 +195,7 @@ Default file structure:
 			}
 			catch (Exception regException)
 			{
-				MessageBox.Show(string.Format("Save crash report failed with exception: \n{0}.", regException.Message)
+				MessageBox.Show(this, string.Format("Save crash report failed with exception: \n{0}.", regException.Message)
 					, DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
 				ActivateSettiingsForm();
 				RegistryWork.SaveCrashReport(crashOccured);
@@ -202,6 +207,8 @@ Default file structure:
 		/// </summary>
 		private void LoadSettings()
 		{
+			_exceptionOccurs = false;
+
 			try
 			{
 				_userInfo = RegistryWork.GetData();
@@ -210,7 +217,7 @@ Default file structure:
 
 				CurrentStatustoolStripStatusLabel.Content = string.Format("Welcome {0}, your time multiplier: {1}, earlier crash occurred: {2}", 
 																			_userInfo.CloudDBUserData.Login, _userInfo.Multiplayer, _userInfo.Crash);
-				_exceptionOccurs = false;
+				
 
 				if (_userInfo.Crash)
 				{
@@ -238,9 +245,28 @@ Default file structure:
 			catch (Exception exception)
 			{
 				_exceptionOccurs = true;
-				MessageBox.Show(string.Format("Loading settings failed with exception: \n{0} \nRecomended to reSet Settings.", exception.Message), DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, 
-								MessageBoxButton.OK, MessageBoxImage.Error);
-				ActivateSettiingsForm();
+				
+				if (_currentlyOnSturtUpSettingsFormsShown++ < MAX_ON_STURT_UP_SETTINGS_FORMS_SHOWS)
+				{
+					ThreadPool.QueueUserWorkItem(el =>
+					                             Dispatcher.Invoke(new Action(() =>
+					                                                          MessageBox.Show(this,
+					                                                                          string.Format(
+						                                                                          "Loading settings failed with exception: \n{0} \nRecomended to (re)Set Settings.",
+						                                                                          exception.Message),
+					                                                                          DefaultConst
+						                                                                          .ERROR_MESSAGE_HEADER_OF_WINDOW,
+					                                                                          MessageBoxButton.OK,
+					                                                                          MessageBoxImage.Error))));
+					
+					ActivateSettiingsForm();
+				}
+				else
+				{
+					MessageBox.Show(this, "No valid settings was entered, program is terminated", DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW,
+									MessageBoxButton.OK, MessageBoxImage.Error);
+					Close();
+				}
 			}
 		}
 
@@ -261,11 +287,11 @@ Default file structure:
 		{
 			if (string.IsNullOrEmpty(WorkDescriptionTextBox.Text))
 			{
-				MessageBox.Show(string.Format("Work description can`t be empty."), DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(this, string.Format("Work description can`t be empty."), DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
 			if ((DateTime.Now.Hour - _workInfo.WorkTime.Hour) < 0)
-				if (MessageBox.Show(string.Format("You probably work starting from yesterday, use yesterday date?"), @"Work Time Automatic Control Suggestion", MessageBoxButton.YesNo, 
+				if (MessageBox.Show(this, string.Format("You probably work starting from yesterday, use yesterday date?"), @"Work Time Automatic Control Suggestion", MessageBoxButton.YesNo, 
 					MessageBoxImage.Question) == MessageBoxResult.Yes)
 					if (_workInfo.WorkTime.Date.Day > 1)
 						_workInfo = new DataEntities.WorkEntity(
@@ -363,10 +389,10 @@ Default file structure:
 
 		private void Window_Closing(object sender, CancelEventArgs e)
 		{
-			if (_reportSended)
+			if (_reportSended || _exceptionOccurs)
 				return;
 			_workInfo.WorkDescription = string.IsNullOrEmpty(WorkDescriptionTextBox.Text)
-			                            || (WorkDescriptionTextBox.Text.Count() < 1)
+			                            || !WorkDescriptionTextBox.Text.Any()
 			                            || !_workDescriptionTextBoxTextChanged
 			                            	? WORK_DESCRIPTION_WHEN_FORM_CLOSING_MISSING
 			                            	: WorkDescriptionTextBox.Text;

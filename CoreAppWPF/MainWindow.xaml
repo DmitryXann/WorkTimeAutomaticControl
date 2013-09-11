@@ -1,6 +1,6 @@
 ﻿<!--
 Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.
-Copyright (C) 2012  Tomayly Dmitry
+Copyright (C) 2013  Tomayly Dmitry
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -38,8 +38,8 @@ Google APIs Client Library for .NET license: http://www.apache.org/licenses/LICE
 				</MenuItem.Effect>
 			</MenuItem>
 		</Menu>
-		<TextBox Margin="12,41,12,81" Name="WorkDescriptionTextBox" Background="#64FFFFFF" Text="Enter work description " KeyUp="WorkDescriptionTextBox_KeyUp" GotFocus="WorkDescriptionTextBox_GotFocus" TabIndex="0" IsTabStop="True" />
-		<Button Content="Report" Margin="12,0,12,52" Background="Transparent" Name="ReportButton" Click="ReportButton_Click" TabIndex="1" FontWeight="Bold" Height="23" VerticalAlignment="Bottom">
+		<TextBox Margin="12,41,12,81" Name="WorkDescriptionTextBox" Background="#64FFFFFF" Text="Enter work description " KeyUp="WorkDescriptionTextBox_KeyUp" GotFocus="WorkDescriptionTextBox_GotFocus" TabIndex="0" IsTabStop="True" IsEnabled="False" />
+		<Button Content="Report" Margin="12,0,12,52" Background="Transparent" Name="ReportButton" Click="ReportButton_Click" TabIndex="1" FontWeight="Bold" Height="23" VerticalAlignment="Bottom" IsEnabled="False">
 			<Button.Effect>
 				<DropShadowEffect Color="White" BlurRadius="10" ShadowDepth="0" RenderingBias="Performance"></DropShadowEffect>
 			</Button.Effect>

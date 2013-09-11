@@ -60,13 +60,13 @@ namespace WorkTimeAutomaticControl
 				string.IsNullOrEmpty(PasswordmaskedTextBox.Password) || 
 				string.IsNullOrEmpty(MultiplierTextBox.Text))
 			{
-				MessageBox.Show(@"All fields must be filled.", DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(this, "All fields must be filled.", DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
 			int multiplier;
 			if (!int.TryParse(MultiplierTextBox.Text, out multiplier))
 			{
-				MessageBox.Show(@"Multiplier must be a digit.", DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(this, "Multiplier must be a digit.", DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
 			var userPrivateData = new DataEntities.UserPrivateData(LoginTextBox.Text, PasswordmaskedTextBox.Password);
@@ -77,7 +77,7 @@ namespace WorkTimeAutomaticControl
 				{
 					if (string.IsNullOrEmpty(CaptchaTextBox.Text))
 					{
-						MessageBox.Show(@"reCaptcha can`t be empty.", DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
+						MessageBox.Show(this, "reCaptcha can`t be empty.", DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
 						return;
 					}
 
@@ -85,7 +85,7 @@ namespace WorkTimeAutomaticControl
 						CloudWorker.HandleCaptcha(_captchaRequiredException, userPrivateData, CaptchaTextBox.Text);
 					else
 					{
-						MessageBox.Show(@"Unexpected error.", DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
+						MessageBox.Show(this, "Unexpected error.", DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
 						return;
 					}
 
@@ -114,7 +114,7 @@ namespace WorkTimeAutomaticControl
 					                            .CreateBitmapSourceFromHBitmap(Properties.Resources.error.GetHbitmap(), IntPtr.Zero,
 					                                                           Int32Rect.Empty,
 					                                                           BitmapSizeOptions.FromEmptyOptions());
-					MessageBox.Show("Google Account Captcha receive fail, enter this reCaptcha: \"GACRFETRC\".",
+					MessageBox.Show(this, "Google Account Captcha receive fail, enter this reCaptcha: \"GACRFETRC\".",
 					                DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
 				}
 				finally
@@ -130,7 +130,7 @@ namespace WorkTimeAutomaticControl
 				MakeCaptchaFormTransformation();
 				LoginTextBox.Focus();
 
-				MessageBox.Show(@"Google Account login fail, enter correct login and password.", DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(this, "Google Account login fail, enter correct login and password.", DefaultConst.ERROR_MESSAGE_HEADER_OF_WINDOW, MessageBoxButton.OK, MessageBoxImage.Error);
 
 				return;
 			}

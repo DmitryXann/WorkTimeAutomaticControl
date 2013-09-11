@@ -241,7 +241,7 @@ del /f /q /s WindowsGadgetBuild\program\*.pdb
 del /f /q /s WindowsGadgetBuild\program\*.vshost.exe
 del /f /q /s WindowsGadgetBuild\program\*.vshost.exe.config
 del /f /q /s WindowsGadgetBuild\program\*.exe.manifest
-WorkTimeAutomaticControlZipper\$(OutDir)WorkTimeAutomaticControlZipper.exe WindowsGadgetBuild WorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget
+Zipper\$(OutDir)WorkTimeAutomaticControlZipper.exe WindowsGadgetBuild WorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget
 if not exist GadgetBuilds\$(ConfigurationName) (md GadgetBuilds\$(ConfigurationName))
 if exist GadgetBuilds\$(ConfigurationName)\WorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget (del /f /q GadgetBuilds\$(ConfigurationName)\*.gadget)
 copy WorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget GadgetBuilds\$(ConfigurationName)\WorkTimeAutomaticControlStopWatch.gadget</PostBuildEvent>
