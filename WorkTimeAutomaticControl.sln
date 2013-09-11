@@ -1,12 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTimeAutomaticControlWPF", "WorkTimeAutomaticControlWPF\WorkTimeAutomaticControlWPF.csproj", "{07F24C5C-B0AB-42C3-B713-26A4355BDCC3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsGadget", "WindowsGadget\WindowsGadget.csproj", "{92543B3E-22DE-49A7-A233-B42B1DE7670A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreAppWPF", "CoreAppWPF\CoreAppWPF.csproj", "{07F24C5C-B0AB-42C3-B713-26A4355BDCC3}"
 	ProjectSection(ProjectDependencies) = postProject
+		{92543B3E-22DE-49A7-A233-B42B1DE7670A} = {92543B3E-22DE-49A7-A233-B42B1DE7670A}
 		{E6DBDC3E-17B9-4CD9-93ED-3B7ECDD74062} = {E6DBDC3E-17B9-4CD9-93ED-3B7ECDD74062}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTimeAutomaticControlZipper", "WorkTimeAutomaticControlZipper\WorkTimeAutomaticControlZipper.csproj", "{E6DBDC3E-17B9-4CD9-93ED-3B7ECDD74062}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zipper", "Zipper\Zipper.csproj", "{E6DBDC3E-17B9-4CD9-93ED-3B7ECDD74062}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,6 +19,12 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{92543B3E-22DE-49A7-A233-B42B1DE7670A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92543B3E-22DE-49A7-A233-B42B1DE7670A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92543B3E-22DE-49A7-A233-B42B1DE7670A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{92543B3E-22DE-49A7-A233-B42B1DE7670A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92543B3E-22DE-49A7-A233-B42B1DE7670A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92543B3E-22DE-49A7-A233-B42B1DE7670A}.Release|x86.ActiveCfg = Release|Any CPU
 		{07F24C5C-B0AB-42C3-B713-26A4355BDCC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{07F24C5C-B0AB-42C3-B713-26A4355BDCC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07F24C5C-B0AB-42C3-B713-26A4355BDCC3}.Debug|x86.ActiveCfg = Debug|x86
