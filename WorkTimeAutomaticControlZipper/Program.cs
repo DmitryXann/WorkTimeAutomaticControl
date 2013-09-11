@@ -24,7 +24,7 @@ namespace WorkTimeAutomaticControlZipper
 			if (!fullFileName.Contains('.'))
 				return -4;
 
-			var selectedFullFilePath = Path.GetDirectoryName(selectedPath.FullName) + fullFileName;
+			var selectedFullFilePath = Path.Combine(Path.GetDirectoryName(selectedPath.FullName), fullFileName);
 
 			try
 			{
