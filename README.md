@@ -25,6 +25,8 @@ Projects folders:
 
 GadgetBuilds - debug and release gadget versions
 
-WorkTimeAutomaticControlWPF - application src
+CoreAppWPF - main application src
 
-WorkTimeAutomaticControlZipper - gadget zipper, used for automatically(after success build) create new gadget build
+WindowsGadget - windows gadget src
+
+Zipper - gadget zipper, used for automatically(after success build) create new gadget build
