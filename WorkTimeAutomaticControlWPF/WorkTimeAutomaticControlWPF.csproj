@@ -218,48 +218,33 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Gadget\css\gadget.css" />
-    <Content Include="Gadget\gadget.html" />
     <Content Include="GoogleDocsAPI\Google.GData.AccessControl.dll" />
     <Content Include="GoogleDocsAPI\Google.GData.Client.dll" />
     <Content Include="GoogleDocsAPI\Google.GData.Documents.dll" />
     <Content Include="GoogleDocsAPI\Google.GData.Extensions.dll" />
     <Content Include="GoogleDocsAPI\Google.GData.Spreadsheets.dll" />
     <Content Include="GoogleDocsAPI\Newtonsoft.Json.DLL" />
-    <Resource Include="Gadget\gadget.xml" />
-    <Resource Include="Gadget\img\gplv3-127x51.png" />
-    <Resource Include="Gadget\img\background.png" />
-    <Resource Include="Gadget\img\icon.png" />
-    <Resource Include="Gadget\img\logo.png" />
-    <Content Include="Gadget\js\gadget.js" />
-    <Content Include="Gadget\settings.html" />
-    <Content Include="Gadget\sounds\confirmed.wav" />
-    <Content Include="Gadget\sounds\drop_your_weapon.wav" />
-    <Content Include="Gadget\sounds\initiating.wav" />
-    <Content Include="Gadget\sounds\input_command.wav" />
-    <Content Include="Gadget\sounds\i_have_return.wav" />
-    <Content Include="Gadget\sounds\i_wait_the_instructions.wav" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Gadget\program\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>cd ..
 cd ..
-del /f /q "Gadget\program\*.*
-xcopy bin\$(ConfigurationName) Gadget\program /s
-del /f /q Gadget\program\*.xml
-del /f /q Gadget\program\*.exe.config
-del /f /q Gadget\program\*.pdb
-del /f /q Gadget\program\*.vshost.exe
-del /f /q Gadget\program\*.vshost.exe.config
-del /f /q Gadget\program\*.exe.manifest
 cd ..
-WorkTimeAutomaticControlZipper\$(OutDir)WorkTimeAutomaticControlZipper.exe $(ProjectName)\Gadget\ WorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget
+if exist WindowsGadgetBuild\program (del /f /q /s WindowsGadgetBuild\program\*.*)
+if exist WindowsGadgetBuild\program (rd /q /s WindowsGadgetBuild\program)
+md WindowsGadgetBuild\program
+xcopy /s $(ProjectName)\bin\$(ConfigurationName) WindowsGadgetBuild\program
+del /f /q /s WindowsGadgetBuild\program\*.xml
+del /f /q /s WindowsGadgetBuild\program\*.exe.config
+del /f /q /s WindowsGadgetBuild\program\*.pdb
+del /f /q /s WindowsGadgetBuild\program\*.vshost.exe
+del /f /q /s WindowsGadgetBuild\program\*.vshost.exe.config
+del /f /q /s WindowsGadgetBuild\program\*.exe.manifest
+WorkTimeAutomaticControlZipper\$(OutDir)WorkTimeAutomaticControlZipper.exe WindowsGadgetBuild WorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget
 if not exist GadgetBuilds\$(ConfigurationName) (md GadgetBuilds\$(ConfigurationName))
 if exist GadgetBuilds\$(ConfigurationName)\WorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget (del /f /q GadgetBuilds\$(ConfigurationName)\*.gadget)
-copy $(ProjectName)\GadgetWorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget GadgetBuilds\$(ConfigurationName)\WorkTimeAutomaticControlStopWatch.gadget</PostBuildEvent>
+copy WorkTimeAutomaticControlStopWatch($(ConfigurationName)).gadget GadgetBuilds\$(ConfigurationName)\WorkTimeAutomaticControlStopWatch.gadget</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
