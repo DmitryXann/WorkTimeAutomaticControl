@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<gadget>
+    <name>Work Time Automatic Control StopWatch</name>
+    <version>8.10.0</version>
+    <author name="Dmitry Tomayly">
+        <info url="" />
+		<logo src="img/logo.png"/>
+    </author>
+    <icons>
+        <icon height="130" width="75" src="img/icon.png" />
+    </icons>
+    <copyright>© Dmitry Tomayly</copyright>
+    <description>
+		Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.
+		Version info: 8(Gadjet version).120(C# program version).0(beta release)
+	</description>
+    <hosts>
+        <host name="sidebar">
+            <base type="HTML" apiVersion="7.9.0" src="gadget.html" />
+            <permissions>Full</permissions>
+            <platform minPlatformVersion="1.0" />
+        </host>
+    </hosts>
+</gadget>
+

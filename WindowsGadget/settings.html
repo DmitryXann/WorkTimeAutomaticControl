@@ -1,0 +1,192 @@
+<html>
+	<head>
+		<title>Work Time Automatic Control StopWatch</title>
+		<style type="text/css">
+			body 
+			{
+				width:300px;
+				height:320px;
+				font-family: Courier, 'Courier New', monospace;
+            }
+            .mainContent
+			{
+			    width:290px;
+				height:290px;
+				overflow:auto;
+            }
+			.font
+			{
+				font-size: 11px;
+				color: black;
+			}
+			.xml
+			{
+				font-size: 11px;
+				color: #32CD32;
+				background-color: #000080;
+			}
+			.headers
+			{
+				text-align: center;
+				font-size: 12px;
+				color: #FFFFFF;
+				background-color: #2A404D;
+			}
+			.headerButtons
+			{
+				text-align: center;
+				font-size: 15px;
+				color: #FFFFFF;
+				background-color: #2A404D;
+			}
+			.separators
+			{
+				text-align: center;
+				font-size: 11px;
+				color: black;
+				background-color: #87CEEB;
+			}
+	    </style>
+	</head>
+    <body onload="init(); this.focus();">
+		<script language="javascript" type="text/javascript">
+			function ShowContent(showAbout) 
+			{
+				var selectedAboutElement = document.getElementById("about");
+				var selectedLicenseElement = document.getElementById("license");
+
+				if (showAbout) 
+				{
+					selectedAboutElement.style.display = "";
+					selectedLicenseElement.style.display = "none";
+				}
+				else 
+				{
+					selectedAboutElement.style.display = "none";
+					selectedLicenseElement.style.display = "";
+				}
+
+				selectedAboutElement.style.overflow = "auto";
+				selectedLicenseElement.style.overflow = "auto";
+			}
+		</script>
+		<div class="mainContent">
+			<table border="0" cellpadding="0" cellspacing="0" style="width: 100%;" class="font">
+				<tr>
+					<td class="headerButtons">
+						<samp onclick="ShowContent(true);" onmouseover="this.style.color='#ff0000'" onmouseout="this.style.color='#ffffff'">About</samp>
+					</td>
+					<td class="headerButtons">
+						<samp onclick="ShowContent(false);" onmouseover="this.style.color='#ff0000'" onmouseout="this.style.color='#ffffff'">License</samp>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div id="about">
+							<table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+								<tr class="headers">
+									<td>
+										About
+									</td>
+								</tr>
+								<tr>
+									<td class="font">
+										<p>Inspired by Jayden Howard`s StopWatch.</p>
+										<p>Part of design & icons are taken from <a href="http://rocketdock.com/addons/skins/downloads">RocketDock</a>.</p>
+										<p>Error icon are taken from <a href="http://www.softicons.com/free-icons/system-icons/crystal-project-icons-by-everaldo-coelho/apps-error-icon">Crystal Project Icons</a>.</p>
+										<p>Cool Aero Glass form are theme taken from <a href="http://blogs.msdn.com/b/adam_nathan/archive/2006/05/04/589686.aspx">sample</a>.</p>
+										<p>Sounds are taken from <a href="http://eu.blizzard.com/en-gb/games/sc/index.html">StarCraft</a> (<a href="http://eu.blizzard.com">Blizzard Entertainment</a>, 1999).</p>
+									</td>
+								<tr class="separators">
+									<td>
+										Description:
+									</td>
+								</tr>
+								<tr>
+									<td class="font">
+										<p>Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.</p>
+										
+										<p>Default spreadsheet name: WorkReport.</p>
+										<p>If for some reason saving information fails, 
+										C# program automatically saves all information in local file. When you start again C# program, 
+										it will automatically try to save local saves in the cloud, 
+										if saving was successful, program clears local file.</p>
+									</td>
+								</tr>
+								<tr>
+									<td class="separators">
+										Local file structure:
+									</td>
+								</tr>
+								<tr class="xml">
+									<td>
+										<p>&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;utf-8\&quot;?&gt;</P>
+										<p>&lt;WorkTimeAutomaticControlCrashReport&gt;</P>
+										<p>&lt;!--This is auto generated file, do not modify--&gt;</P>
+										<p>&nbsp;&nbsp;&nbsp;&nbsp;&lt;WorkTime WorkTime=\&quot;YYYY-MM-DDTHH:MM:SS\&quot;&gt;Work description&lt;/WorkTime&gt;</P>
+										<p>&lt;/WorkTimeAutomaticControlCrashReport&gt;&quot;</P>
+									</td>
+								</tr>
+								<tr class="headers">
+									<td>
+										Copyright © Dmitry Tomayly 2012, E-Mail: mailrules@mail.ru
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div id="license" style="display: none">
+							<table border="0" cellpadding="0" cellspacing="0" style="width: 100%;" class="font">
+								<tr  class="headers">
+									<td>
+										License
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<p>Work Time Automatic Control StopWatch use Google Spreadsheets to save your work information in the cloud.
+										Copyright (C) 2013  Tomayly Dmitry</p>
+
+										<p>This program is free software: you can redistribute it and/or modify
+										it under the terms of the GNU General Public License as published by
+										the Free Software Foundation, either version 3 of the License, or
+										(at your option) any later version.</p>
+
+										<p>This program is distributed in the hope that it will be useful,
+										but WITHOUT ANY WARRANTY; without even the implied warranty of
+										MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+										GNU General Public License for more details.</p>
+
+										<p>You should have received a copy of the GNU General Public License
+										along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/.</a></p>
+										
+										<p>Google APIs Client Library for .NET license: <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0.</a></p>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr>
+				<tr class="headers">
+					<td colspan="2">
+						Version info: 8(Gadjet version).120(C# program version).0(beta release)
+					</td>
+				</tr>
+				<tr class="headers">
+					<td colspan="2">
+						<a href="https://github.com/DmitryXann/WorkTimeAutomaticControl">Source</a>
+					</td>
+				</tr>
+				<tr class="headers">
+					<td colspan="2">
+						<a href="file://program/CrashReport.xml">CrashReport (if exist)</a>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align:center;">
+						<a href="http://www.gnu.org/licenses/licenses.html#GPL"><img src="img/gplv3-127x51.png" /></a>
+					</td>
+				</tr>
+			</table>		
+		</div>
+	</body>
+</html>
