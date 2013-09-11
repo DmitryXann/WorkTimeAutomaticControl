@@ -23,7 +23,7 @@ ___________
 Projects folders:
 ===========
 
-GadgetBuilds - debug and release gadget versions
+GadgetBuilds - debug and release windows gadget versions
 
 CoreAppWPF - main application src
 
